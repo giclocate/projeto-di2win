@@ -4,7 +4,6 @@
   flex-direction: column;
   width: 200px;
   height: 650px;
-  cursor: pointer;
 }
 
 .menu-bar{
@@ -16,6 +15,7 @@ li {
   list-style: none;
   font-size: 1.2rem;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .btn-relatorio {
