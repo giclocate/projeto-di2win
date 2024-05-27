@@ -7,6 +7,7 @@
 
 .logo {
   margin-top: 0.6px;
+  cursor: pointer;
 }
 
 .info-box{
@@ -23,10 +24,12 @@
 .material-icons {
   color: #F21C8A;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .nick-name {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .plano-box {
@@ -35,4 +38,10 @@
   border-radius: 8px;
   margin-right: 10px;
   height: 35px;
+  cursor: pointer;
+}
+
+.plan {
+  color: #3F3F3F;
+  font-weight:bold;
 }
