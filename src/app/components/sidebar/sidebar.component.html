@@ -1,0 +1,14 @@
+<div class="side-bar">
+  <div class="menu-bar">
+    <li>Menu Principal</li>
+    <li>Enviar Arquivo</li>
+    <li class="menu-suspenso" (click)="toggleDropdown()">Relatórios
+      <div class="options-menu" *ngIf="isDropdownOpen">
+        <li><a>Analitico</a></li><!-- aqui precisa passar a pagina do relatorio Analitico -->
+        <li><a>Sintetico</a></li><!-- aqui precisa passar a pagina do relatorio Sintetico -->
+      </div>
+    </li>
+    <li>Perfil</li>
+    <li>Sair</li>
+  </div>
+</div>
