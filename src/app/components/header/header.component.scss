@@ -1,0 +1,38 @@
+.nav-bar{
+  display: flex;
+  background-color: #FFFDFD;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  margin-top: 0.6px;
+}
+
+.info-box{
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.user-box, .plano-box {
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  color: #F21C8A;
+  font-size: 30px;
+}
+
+.nick-name {
+  margin-left: 10px;
+}
+
+.plano-box {
+  background-color: #D9D9D9;
+  padding: 0 40px 0 40px;
+  border-radius: 8px;
+  margin-right: 10px;
+  height: 35px;
+}
