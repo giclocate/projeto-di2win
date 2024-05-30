@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinha verticalmente no centro */
+    align-items: center; /* Alinha horizontalmente no centro */
+    height: 100vh; /* Altura total da viewport */
+  }
+  
+  .form {
+    width: 80%; /* Largura desejada para o formulário */
+  }
+  
