@@ -7,6 +7,9 @@
   }
   
   .form {
-    width: 80%; /* Largura desejada para o formulário */
+    width: 100%; /* Largura desejada para o formulário */
   }
   
+  .container .mat-form-field {
+    width: 600px; /* Largura desejada do mat-form-field */
+  }
