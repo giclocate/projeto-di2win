@@ -2,14 +2,14 @@
     display: flex;
     height: 100vh; /* Ajuste conforme necessário */
   }
-  
+
   .form-container {
     flex: 1; /* Ocupa todo o espaço disponível */
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
   }
-  
+
   /* Ajuste as dimensões do formulário conforme necessário */
   app-form {
     width: 80%; /* Largura do formulário */
@@ -22,4 +22,3 @@
   width: 120%;
   background-color: red;
 }
-  

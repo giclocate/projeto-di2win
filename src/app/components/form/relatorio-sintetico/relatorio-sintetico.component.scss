@@ -1,0 +1,131 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+#tituloPageRelatorio h1 {
+  font-family: "Sora", sans-serif;
+  font-weight: 400;
+  padding-left: 0.5%;
+}
+
+#paginasProcessadas {
+  font-family: "Sora", sans-serif;
+  color: #aaaaaa;
+  margin-top: -0.5%;
+  padding-left: 0.5%;
+}
+
+#divPesquisaRelatorio {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  font-family:  "Sora", sans-serif;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+#tipoRelatorioInput {
+  display: flex;
+  flex-direction: column;
+  color: #3F3F3F;
+  margin: -20px;
+}
+
+#inputPesquisa{
+  padding: 2%;
+  width: 70%;
+  border-radius: 5px;
+  border: 1px solid #a8a8a8;
+  border-radius: 5px;
+  outline: none;
+}
+
+#inputPesquisa[type='text']:focus, #inputTipoDocumento:focus {
+  border:1.5px solid #575757;
+  outline: none;
+}
+
+#inputPesquisa:focus + #icon-lupa {
+ font-size: 1rem;
+}
+
+#icon-lupa{
+  position: absolute;
+  margin-left: 43%;
+  margin-top: 0%;
+  color: #F21C8A;
+  font-size: 1.2rem;
+  transition: 0.6s;
+}
+#msg-pesquisa{
+  padding: 10%;
+}
+
+
+input[type='radio'] {
+  accent-color: #F21C8A;
+  border: 1px solid red;
+}
+
+#inputTipoDocumento{
+  width:277px;
+  height: 60px;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: 1px solid #3F3F3F;
+}
+
+#inputTipoDocumento::placeholder{
+  font-size: 15px;
+}
+
+@media screen and (max-width: 900px) {
+  #divPesquisaRelatorio{
+    flex-wrap: wrap;
+  }
+
+  #icon-lupa{
+    top: 31%;
+    margin-left: 48%;
+  }
+  #inputPesquisa{
+    width: 99%;
+  }
+}
+
+#baixarRelatorio{
+  padding: 2% 5% 2% 5%;
+  border:2px solid #F21C8A;
+  color: #F21C8A;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 72.5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  font-family:"Sora", sans-serif;
+  font-weight: 800;
+  transition: 0.6s;
+  box-shadow: 0px 8px 17px -8px rgb(22, 22, 22);
+}
+
+#baixarRelatorio:hover{
+  background-color: #F21C8A;
+  color: white;
+
+}
+.titulo-sintetico{
+  color: #aaaaaa;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: -20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mat-datepicker-toggle{
+  color: #F21C8A; // Cor do ícone
+}
+
+

@@ -10,7 +10,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { DatePipe } from '@angular/common';
+<<<<<<< HEAD
 import { ExcelService } from '../../services/excel.service';
+=======
+import { RelatorioAnaliticoComponent } from './relatorio-analitico/relatorio-analitico.component';
+import { RelatorioSinteticoComponent } from './relatorio-sintetico/relatorio-sintetico.component';
+>>>>>>> 21324db2e495493cc112f7fc2c12c5686d559b08
 
 
 
@@ -85,7 +90,7 @@ const mockCompany: string[] = [
   styleUrls: ['form.component.scss'],
   templateUrl: 'form.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
+  imports: [RelatorioAnaliticoComponent, RelatorioSinteticoComponent],
   providers: [provideNativeDateAdapter(), DatePipe]
 })
 export class FormComponent implements AfterViewInit {
@@ -182,8 +187,16 @@ function createNewUser(id: number, datePipe: DatePipe): UserData {
   };
 }
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+function getRandomDate(): Date {
+  const start = new Date(2024, 0, 1);
+  const end = new Date();
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+>>>>>>> 21324db2e495493cc112f7fc2c12c5686d559b08
