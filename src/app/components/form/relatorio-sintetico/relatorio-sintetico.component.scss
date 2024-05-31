@@ -1,5 +1,22 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+
+#page{
+  margin-top: 30%;
+  font-family: "Sora", sans-serif;
+}
+
+#DivisaoPesquisa {
+  width: 90%;
+}
+#divPesquisaRelatorio[_ngcontent-ng-c829762274] mat-form-field[_ngcontent-ng-c829762274] {
+  width: 70%;
+}
+#tituloPageRelatorio hr {
+  border-color: red;
+  border: 1px solid #F21C8A;
+  margin-top: -1%;
+}
 
 #tituloPageRelatorio h1 {
   font-family: "Sora", sans-serif;
@@ -14,29 +31,14 @@
   padding-left: 0.5%;
 }
 
-#divPesquisaRelatorio {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
-  font-family:  "Sora", sans-serif;
-  width: 100%;
-  margin-bottom: 5%;
-}
-
-#tipoRelatorioInput {
-  display: flex;
-  flex-direction: column;
-  color: #3F3F3F;
-  margin: -20px;
-}
-
-#inputPesquisa{
+#inputPesquisa,#inputTipoDocumento {
   padding: 2%;
-  width: 70%;
+  width: 100%;
   border-radius: 5px;
-  border: 1px solid #a8a8a8;
+  border: 1.5px solid #a8a8a8;
   border-radius: 5px;
   outline: none;
+  margin-bottom: 2%;
 }
 
 #inputPesquisa[type='text']:focus, #inputTipoDocumento:focus {
@@ -49,47 +51,72 @@
 }
 
 #icon-lupa{
-  position: absolute;
-  margin-left: 43%;
-  margin-top: 0%;
   color: #F21C8A;
   font-size: 1.2rem;
   transition: 0.6s;
+  margin-left: -6%;
+  margin-top: 2%;
 }
 #msg-pesquisa{
   padding: 10%;
 }
 
+#divPesquisaRelatorio {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  font-family:  "Sora", sans-serif;
+  margin-bottom: 5%;
+}
+
+#tipoRelatorioInput {
+  display: flex;
+  flex-direction: column;
+  color: #3F3F3F;
+}
 
 input[type='radio'] {
   accent-color: #F21C8A;
   border: 1px solid red;
 }
 
+
+#inputLupa{
+  display: flex;
+  width: 97%;
+}
+
 #inputTipoDocumento{
-  width:277px;
-  height: 60px;
-  padding-left: 15px;
+  width: 51%;
+  margin-top: 1.5%;
+  
+}
+
+#inputsAnaliticos{
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+#inputData{
+  border: 1px solid #a8a8a8;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
-  border: 1px solid #3F3F3F;
+  margin-left: 1%;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2%;
 }
 
-#inputTipoDocumento::placeholder{
-  font-size: 15px;
+#iconInputData{
+  color: #F21C8A;
+
 }
-
-@media screen and (max-width: 900px) {
-  #divPesquisaRelatorio{
-    flex-wrap: wrap;
-  }
-
-  #icon-lupa{
-    top: 31%;
-    margin-left: 48%;
-  }
-  #inputPesquisa{
-    width: 99%;
-  }
+#buttonBaixar{
+  display: flex;
+  justify-content: end;
 }
 
 #baixarRelatorio{
@@ -98,7 +125,6 @@ input[type='radio'] {
   color: #F21C8A;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 72.5%;
   margin-top: 5%;
   margin-bottom: 5%;
   font-family:"Sora", sans-serif;
@@ -115,17 +141,3 @@ input[type='radio'] {
 .titulo-sintetico{
   color: #aaaaaa;
 }
-
-.input-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: -20px;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.mat-datepicker-toggle{
-  color: #F21C8A; // Cor do ícone
-}
-
-
