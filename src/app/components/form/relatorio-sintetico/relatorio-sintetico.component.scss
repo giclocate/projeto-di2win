@@ -87,7 +87,7 @@ input[type='radio'] {
 }
 
 #inputTipoDocumento{
-  width: 51%;
+  width: 40%;
   margin-top: 1.5%;
   
 }
@@ -96,6 +96,14 @@ input[type='radio'] {
   display: flex;
   flex-wrap: wrap;
   width: 80%;
+}
+
+#icon-xmark{
+  transition: 0.6s;
+  margin-left: 3%;
+  margin-top: 3%;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 #inputData{

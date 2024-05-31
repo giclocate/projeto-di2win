@@ -133,8 +133,6 @@ export class RelatorioSinteticoComponent {
     }
   }
 
-  
-
   applyDateFilter(type: 'start' | 'end', event: any): void {
     if (type === 'start') {
       this.startDate = event.value;
@@ -161,6 +159,25 @@ export class RelatorioSinteticoComponent {
       }
     }
   }
+
+ 
+  resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {
+    this.startDate = null;
+    this.endDate = null;
+
+    // Limpar valores dos Datepickers
+    startInput.value = '';
+    endInput.value = '';
+
+    // Definindo uma função de filtro que sempre retorna verdadeiro para todos os dados
+    this.dataSource.filterPredicate = () => true;
+    this.dataSource.filter = '';
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
 
   parseDate(dateString: string, format: string = 'dd/MM/yyyy'): Date {
     const parts = dateString.split('/');

@@ -18,7 +18,7 @@
           placeholder="Pesquisar por Nome, CPF OU CNPJ"
           #input
         />
-        <i id="icon-lupa" class="fa-solid fa-magnifying-glass"></i>
+        <i id="icon-lupa" class="fa-solid fa-magnifying-glass" ></i>
       </div>
       <!--input tipo de documento-->
       <input
@@ -29,7 +29,7 @@
         placeholder="Tipo de documento"
         #input
       />
-
+      <i id="icon-xmark" class="fa-solid fa-circle-xmark" (click)="resetDateFilter(startInput, endInput)"></i>
       <!--inputs de data-->
       <div id="inputData">
         <mat-date-range-input color="accent" [rangePicker]="picker" id="">
@@ -38,12 +38,14 @@
             placeholder="Início"
             matInput
             (dateChange)="applyDateFilter('start', $event)"
+            #startInput
           />
           <input
             matEndDate
             placeholder="Fim"
             matInput
             (dateChange)="applyDateFilter('end', $event)"
+            #endInput
           />
         </mat-date-range-input>
         <mat-datepicker-toggle
