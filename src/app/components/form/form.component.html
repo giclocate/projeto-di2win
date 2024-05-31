@@ -10,6 +10,18 @@
     <!--input de pesquisa-->
     <input type="text" disabled="" id="inputPesquisa" matInput (keyup)="applyFilter($event)" placeholder="Pesquisar por Nome, CPF OU CNPJ" #input>
     <i id="icon-lupa" class="fa-solid fa-magnifying-glass"></i>
+
+    <input type="text" id="inputTipoDocumento" matInput (keyup)="applyFilter($event)" placeholder="Tipo de documento" #input>
+
+        <mat-form-field id="teste">
+          <mat-date-range-input [rangePicker]="picker" id="teste">
+            <input  matStartDate placeholder="Início">
+            <input matEndDate placeholder="Fim">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
     <!--input - tipo de relatório-->
     <div id="tipoRelatorioInput">
       <p>Tipo de relatório: </p>
@@ -69,19 +81,7 @@
         input de pesquisa--
         <input type="text" id="inputPesquisa" matInput (keyup)="applyFilter($event)" placeholder="Pesquisar por CPF ou CNPJ" #input>
         <i id="icon-lupa" class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="inputTipoDocumento" matInput (keyup)="applyFilter($event)" placeholder="Tipo de documento" #input>
-
-
-
-
-        <mat-form-field id="teste">
-          <mat-date-range-input [rangePicker]="picker" id="teste">
-            <input  matStartDate placeholder="Start date">
-            <input matEndDate placeholder="End date">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
+        
         
   </div>
 
