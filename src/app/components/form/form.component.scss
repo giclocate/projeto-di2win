@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 
 
@@ -6,7 +5,6 @@
   margin-top: -8%;
   font-family: "Sora", sans-serif;
 }
-
 
 #DivisaoPesquisa {
   width: 90%;
@@ -35,11 +33,12 @@
 
 #inputPesquisa,#inputTipoDocumento {
   padding: 2%;
-  width: 70%;
+  width: 100%;
   border-radius: 5px;
-  border: 1px solid #a8a8a8;
+  border: 1.5px solid #a8a8a8;
   border-radius: 5px;
   outline: none;
+  margin-bottom: 2%;
 }
 
 #inputPesquisa[type='text']:focus, #inputTipoDocumento:focus {
@@ -52,12 +51,11 @@
 }
 
 #icon-lupa{
-  position: absolute;
-  margin-left: 43%;
-  margin-top: 0%;
   color: #F21C8A;
   font-size: 1.2rem;
   transition: 0.6s;
+  margin-left: -6%;
+  margin-top: 2%;
 }
 #msg-pesquisa{
   padding: 10%;
@@ -83,27 +81,42 @@ input[type='radio'] {
 }
 
 
-#teste{
-  border: 1px solid #575757;
-  padding-bottom: -5%;
+#inputLupa{
+  display: flex;
+  width: 97%;
 }
 
 #inputTipoDocumento{
-  width: 36%;
+  width: 51%;
+  margin-top: 1.5%;
+  
 }
 
-@media screen and (max-width: 900px) {
-  #divPesquisaRelatorio{
-    flex-wrap: wrap;
-  }
+#inputsAnaliticos{
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
 
-  #icon-lupa{
-    top: 31%;
-    margin-left: 48%;
-  }
-  #inputPesquisa{
-    width: 99%;
-  }
+#inputData{
+  border: 1px solid #a8a8a8;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin-left: 1%;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2%;
+}
+
+#iconInputData{
+  color: #F21C8A;
+
+}
+#buttonBaixar{
+  display: flex;
+  justify-content: end;
 }
 
 #baixarRelatorio{
@@ -112,7 +125,6 @@ input[type='radio'] {
   color: #F21C8A;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 72.5%;
   margin-top: 5%;
   margin-bottom: 5%;
   font-family:"Sora", sans-serif;
