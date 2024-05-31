@@ -2,27 +2,29 @@
 <div id="divPesquisaRelatorio">
   <!--input de pesquisa-->
   <input type="text" disabled="" id="inputPesquisa" matInput (keyup)="applyFilter($event)" placeholder="Pesquisar por Nome, CPF OU CNPJ" #input>
-  <i id="icon-lupa" class="fa-solid fa-magnifying-glass"></i>
-
-  <input type="text" id="inputTipoDocumento" matInput (keyup)="applyFilter($event)" placeholder="Tipo de documento" #input>
-
-      <mat-form-field id="teste">
-        <mat-date-range-input [rangePicker]="picker" id="teste">
-          <input  matStartDate placeholder="Início">
-          <input matEndDate placeholder="Fim">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
-
-  <!--input - tipo de relatório-->
-  <div id="tipoRelatorioInput">
+  <mat-icon matPrefix>search</mat-icon>
+      <!--input - tipo de relatório-->
+       <div id="tipoRelatorioInput">
     <p>Tipo de relatório: </p>
-    <div><input type="radio" id="sintetico" name="gender" value="male" checked> Sintético</div>
-    <div><input id="analitico" type="radio" name="gender" value="female"> Analítico </div>
+    <div><input type="radio"  routerLinkActive="router-link-active"  id="sintetico" name="gender" value="male" checked> Sintético</div>
+    <div><input id="analitico" type="radio" name="gender" value="female" >Analítico </div>
   </div>
-</div>
+  </div>
+  <div class="input-container">
+    <!-- input do tipo de documento -->
+    <input type="text" id="inputTipoDocumento" matInput (keyup)="applyFilter($event)" placeholder="Tipo de documento" #input>
+    <!-- calendário-->
+    <mat-form-field appearance="fill" id="teste">
+      <mat-label>Selecione o Período</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Início">
+        <input matEndDate placeholder="Fim">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
 
+  </div>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 

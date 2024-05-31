@@ -14,7 +14,23 @@
   padding-left: 0.5%;
 }
 
-#inputPesquisa,#inputTipoDocumento {
+#divPesquisaRelatorio {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  font-family:  "Sora", sans-serif;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+#tipoRelatorioInput {
+  display: flex;
+  flex-direction: column;
+  color: #3F3F3F;
+  margin: -20px;
+}
+
+#inputPesquisa{
   padding: 2%;
   width: 70%;
   border-radius: 5px;
@@ -44,33 +60,22 @@
   padding: 10%;
 }
 
-#divPesquisaRelatorio {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
-  font-family:  "Sora", sans-serif;
-  margin-bottom: 5%;
-}
-
-#tipoRelatorioInput {
-  display: flex;
-  flex-direction: column;
-  color: #3F3F3F;
-}
 
 input[type='radio'] {
   accent-color: #F21C8A;
   border: 1px solid red;
 }
 
-
-#teste{
-  border: 1px solid #575757;
-  padding-bottom: -5%;
+#inputTipoDocumento{
+  width:277px;
+  height: 60px;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: 1px solid #3F3F3F;
 }
 
-#inputTipoDocumento{
-  width: 36%;
+#inputTipoDocumento::placeholder{
+  font-size: 15px;
 }
 
 @media screen and (max-width: 900px) {
@@ -110,3 +115,17 @@ input[type='radio'] {
 .titulo-sintetico{
   color: #aaaaaa;
 }
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: -20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mat-datepicker-toggle{
+  color: #F21C8A; // Cor do ícone
+}
+
+

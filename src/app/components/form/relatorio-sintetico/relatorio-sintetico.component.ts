@@ -10,6 +10,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { DatePipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 
 export interface UserData {
@@ -67,7 +68,7 @@ const EMPRESA: string[] = [
   standalone: true,
   templateUrl: './relatorio-sintetico.component.html',
   styleUrl: './relatorio-sintetico.component.scss',
-  imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
+  imports: [MatFormFieldModule,MatIcon,MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
   providers: [provideNativeDateAdapter(), DatePipe]
 })
 export class RelatorioSinteticoComponent {
