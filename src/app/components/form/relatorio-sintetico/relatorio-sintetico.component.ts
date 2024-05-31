@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -10,9 +10,6 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { DatePipe } from '@angular/common';
-import { RelatorioAnaliticoComponent } from './relatorio-analitico/relatorio-analitico.component';
-import { RelatorioSinteticoComponent } from './relatorio-sintetico/relatorio-sintetico.component';
-
 
 
 export interface UserData {
@@ -66,14 +63,15 @@ const EMPRESA: string[] = [
 ];
 
 @Component({
-  selector: 'app-form',
-  styleUrls: ['form.component.scss'],
-  templateUrl: 'form.component.html',
+  selector: 'app-relatorio-sintetico',
   standalone: true,
-  imports: [RelatorioAnaliticoComponent, RelatorioSinteticoComponent],
+  templateUrl: './relatorio-sintetico.component.html',
+  styleUrl: './relatorio-sintetico.component.scss',
+  imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
   providers: [provideNativeDateAdapter(), DatePipe]
 })
-export class FormComponent implements AfterViewInit {
+export class RelatorioSinteticoComponent {
+
   displayedColumns: string[] = ['empresaID', 'dataID', 'tipoDocumento', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
 
@@ -119,3 +117,4 @@ function getRandomDate(): Date {
   const end = new Date();
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
+
