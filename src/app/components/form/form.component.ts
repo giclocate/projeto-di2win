@@ -6,6 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+
+
 export interface UserData {
   id: string;
   name: string;
@@ -50,7 +55,8 @@ const NAMES: string[] = [
   styleUrls: ['form.component.scss'],
   templateUrl: 'form.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule],
+  imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
+  providers: [provideNativeDateAdapter()]
 })
 export class FormComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
