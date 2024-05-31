@@ -9,45 +9,58 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
+import { DatePipe } from '@angular/common';
+
 
 
 export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+  empresaID: string;
+  dataID: string;
+  tipoDocumento: string;
+  qtdPag: string;
 }
 
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
+const QTD_PAG: string[] = [
+  '16',
+  '100',
+  '54',
+  '321',
+  '1230',
+  '243',
+  '321',
+  '28',
 ];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
+
+const tipoDocumento: string[] = [
+  'CNH',
+  'CPF',
+  'Contrato ',
+  'Certidão de Nascimento',
+  'Certidão de Casamento',
+  'Certidão de Óbito',
+  'Carteira de Trabalho',
+  'Comprovante de Residência',
+  'Passaporte',
+  'RG',
+  'Carteira de Identidade Profissional',
+  'Título de Eleitor',
+  'Carteira de Estudante',
+  'Certificado de Reservista',
+  'Cartão de Crédito ',
+  'Cartão de Débito'
+];
+
+const EMPRESA: string[] = [
+  'CyberTech',
+  'NovaWave Industries',
+  'Quantum Innovations',
+  'SkyLabs Corporation',
+  'NebulaTech Solutions',
+  'Phoenix Innovate',
+  'HorizonTech Enterprises',
+  'FusionWorks Inc.',
+  'PrimeTech Solutions',
+  'Apex Global Technologies'
 ];
 
 @Component({
@@ -56,17 +69,17 @@ const NAMES: string[] = [
   templateUrl: 'form.component.html',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
-  providers: [provideNativeDateAdapter()]
+  providers: [provideNativeDateAdapter(), DatePipe]
 })
 export class FormComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  displayedColumns: string[] = ['empresaID', 'dataID', 'tipoDocumento', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+  constructor(private datePipe: DatePipe) {
+    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
     this.dataSource = new MatTableDataSource(users);
   }
 
@@ -85,17 +98,22 @@ export class FormComponent implements AfterViewInit {
   }
 }
 
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
+function createNewUser(id: number, datePipe: DatePipe): UserData {
+  const name = tipoDocumento[Math.round(Math.random() * (tipoDocumento.length - 1))];
+  const empresa = EMPRESA[Math.round(Math.random() * (EMPRESA.length - 1))];
+  const randomDate = getRandomDate();
+  const formattedDate = datePipe.transform(randomDate, 'dd/MM/yyyy') || '';
 
   return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
+    empresaID: empresa,
+    dataID: formattedDate,
+    tipoDocumento: name,
+    qtdPag: QTD_PAG[Math.round(Math.random() * (QTD_PAG.length - 1))],
   };
+}
+
+function getRandomDate(): Date {
+  const start = new Date(2024, 0, 1);
+  const end = new Date();
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
