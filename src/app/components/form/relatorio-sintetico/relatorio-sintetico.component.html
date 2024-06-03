@@ -15,7 +15,7 @@
           id="inputPesquisa"
           matInput
           (keyup)="applyFilter($event)"
-          placeholder="Pesquisar por Nome, CPF OU CNPJ"
+          placeholder="Pesquisar por nome da empresa"
           #input
         />
         <i id="icon-lupa" class="fa-solid fa-magnifying-glass" ></i>
@@ -25,6 +25,7 @@
         type="text"
         id="inputTipoDocumento"
         matInput
+        disabled=""
         (keyup)="applyFilter($event)"
         placeholder="Tipo de documento"
         #input
