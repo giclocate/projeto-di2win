@@ -1,7 +1,10 @@
+<!-- app.component.html -->
+
 <app-header></app-header>
 <div class="container">
-  <app-sidebar></app-sidebar>
+  <app-sidebar (sintetico)="switchToSintetico()" (analitico)="switchToAnalitico()"></app-sidebar>
   <div class="form-container">
-    <app-relatorio-sintetico></app-relatorio-sintetico>
+    <app-relatorio-sintetico *ngIf="isRelatorioSinteticoVisible"></app-relatorio-sintetico>
+    <app-relatorio-analitico *ngIf="isRelatorioAnaliticoVisible"></app-relatorio-analitico>
   </div>
 </div>

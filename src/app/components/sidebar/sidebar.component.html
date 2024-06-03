@@ -1,8 +1,16 @@
+<!-- sidebar.component.html -->
+
 <div class="side-bar">
   <div class="menu-bar">
     <li>Menu Principal</li>
     <li>Enviar Arquivo</li>
-    <li class="btn-relatorio">Relatórios</li>
+    <li class="dropdown" [class.active]="isDropdownOpen">
+      <a (click)="toggleDropdown()">Relatórios</a>
+      <ul class="dropdown-content" *ngIf="isDropdownOpen">
+        <li (click)="emitSintetico()">Sintético</li>
+        <li (click)="emitAnalitico()">Analítico</li>
+      </ul>
+    </li>
     <li>Perfil</li>
     <li>Sair</li>
   </div>
