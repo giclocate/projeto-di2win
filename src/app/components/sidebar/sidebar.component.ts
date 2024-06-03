@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { RelatorioComponent } from '../form/relatorio/relatorio.component';
 import { RelatorioAnaliticoComponent } from '../form/relatorio-analitico/relatorio-analitico.component';
 import { RelatorioSinteticoComponent } from '../form/relatorio-sintetico/relatorio-sintetico.component';
 import { MatIcon } from '@angular/material/icon';
@@ -8,12 +7,11 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RelatorioComponent, MatIcon,RelatorioAnaliticoComponent,RelatorioSinteticoComponent],
+  imports: [CommonModule, MatIcon, RelatorioAnaliticoComponent, RelatorioSinteticoComponent],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-
   isDropdownOpen = false;
 
   @Output() sintetico = new EventEmitter<void>();
@@ -25,11 +23,11 @@ export class SidebarComponent {
 
   emitSintetico(): void {
     this.sintetico.emit();
-    this.isDropdownOpen = false; // Fechar o dropdown após a seleção
+    this.isDropdownOpen = false;
   }
 
   emitAnalitico(): void {
     this.analitico.emit();
-    this.isDropdownOpen = false; // Fechar o dropdown após a seleção
+    this.isDropdownOpen = false;
   }
 }

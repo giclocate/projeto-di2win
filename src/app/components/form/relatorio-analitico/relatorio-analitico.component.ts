@@ -8,9 +8,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 export interface UserData {
+  id: number;
   empresaID: string;
   dataID: string;
   tipoDocumento: string;
@@ -78,13 +85,14 @@ const mockCompany: string[] = [
 @Component({
   selector: 'app-relatorio-analitico',
   standalone: true,
-  imports: [MatFormFieldModule, MatIcon, MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
   templateUrl: './relatorio-analitico.component.html',
-  styleUrl: './relatorio-analitico.component.scss'
+  styleUrl: './relatorio-analitico.component.scss',
+  imports: [ReactiveFormsModule,FormsModule,MatAutocompleteModule,MatInputModule, MatFormFieldModule,MatIcon,MatInputModule, MatPaginatorModule, MatTableModule, MatDatepickerModule],
+  providers: [provideNativeDateAdapter(), DatePipe]
 })
 export class RelatorioAnaliticoComponent {
-
-  displayedColumns: string[] = ['empresaID', 'dataID', 'tipoDocumento', 'qtdPag'];
+  
+  displayedColumns: string[] = ['tipoDocumento', 'dataID', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -93,9 +101,18 @@ export class RelatorioAnaliticoComponent {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
+  inputControl = new FormControl();
+  suggestions: string[] = mockCompany;
+  filteredSuggestions: Observable<string[]>;
+
+
   constructor(private datePipe: DatePipe, private excelService: ExcelService) {
     const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
     this.dataSource = new MatTableDataSource(users);
+    this.filteredSuggestions = this.inputControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   exportData() {
@@ -105,7 +122,7 @@ export class RelatorioAnaliticoComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
+  
     this.dataSource.filterPredicate = (data: UserData, filter: string) => {
       if (filter.includes('-')) {
         const [start, end] = filter.split('-').map(date => new Date(date.trim()));
@@ -113,10 +130,11 @@ export class RelatorioAnaliticoComponent {
         return dataDate >= start && dataDate <= end;
       } else {
         const lowerCaseFilter = filter.trim().toLowerCase();
-        return data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
+        return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
+               data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       }
     };
-  }
+  }  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -154,7 +172,15 @@ export class RelatorioAnaliticoComponent {
     }
   }
 
-
+  applyCompanyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }  
+ 
   resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {
     this.startDate = null;
     this.endDate = null;
@@ -172,6 +198,11 @@ export class RelatorioAnaliticoComponent {
     }
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.suggestions.filter(suggestion => suggestion.toLowerCase().includes(filterValue));
+  }
+
 
   parseDate(dateString: string, format: string = 'dd/MM/yyyy'): Date {
     const parts = dateString.split('/');
@@ -187,11 +218,11 @@ export class RelatorioAnaliticoComponent {
 function createNewUser(id: number, datePipe: DatePipe): UserData {
   const document = mockDocument[Math.round(Math.random() * (mockDocument.length - 1))];
   const empresa = mockCompany[Math.round(Math.random() * (mockCompany.length - 1))];
-  const pags= mockPags[Math.round(Math.random() * (mockPags.length - 1))];
+  const pags = mockPags[Math.round(Math.random() * (mockPags.length - 1))];
   const dates = mockDates[Math.round(Math.random() * (mockDates.length - 1))];
 
-
   return {
+    id: id,
     empresaID: empresa,
     dataID: dates,
     tipoDocumento: document,
