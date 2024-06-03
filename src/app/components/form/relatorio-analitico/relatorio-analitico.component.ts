@@ -91,8 +91,8 @@ const mockCompany: string[] = [
   providers: [provideNativeDateAdapter(), DatePipe]
 })
 export class RelatorioAnaliticoComponent {
-  
-  displayedColumns: string[] = ['tipoDocumento', 'dataID', 'qtdPag'];
+
+  displayedColumns: string[] = ['empresaID','tipoDocumento', 'dataID', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -122,7 +122,7 @@ export class RelatorioAnaliticoComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  
+
     this.dataSource.filterPredicate = (data: UserData, filter: string) => {
       if (filter.includes('-')) {
         const [start, end] = filter.split('-').map(date => new Date(date.trim()));
@@ -134,7 +134,7 @@ export class RelatorioAnaliticoComponent {
                data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       }
     };
-  }  
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -175,12 +175,12 @@ export class RelatorioAnaliticoComponent {
   applyCompanyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }  
- 
+  }
+
   resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {
     this.startDate = null;
     this.endDate = null;

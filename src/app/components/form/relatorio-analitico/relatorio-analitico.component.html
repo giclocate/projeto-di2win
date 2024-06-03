@@ -57,12 +57,24 @@
     </div>
 
     <!--input - tipo de relatório-->
-    
+
   </div>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Empresa Column -->
+            <!-- Empresa Column -->
+            <ng-container matColumnDef="empresaID">
+              <th
+                class="titulo-sintetico"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                Empresa
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.empresaID }}</td>
+            </ng-container>
+      <!-- Tipo de Documento Column -->
       <ng-container matColumnDef="tipoDocumento">
         <th
           class="titulo-sintetico"
