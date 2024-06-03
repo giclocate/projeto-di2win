@@ -1,14 +1,17 @@
 <!-- sidebar.component.html -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="side-bar">
   <div class="menu-bar">
     <li>Menu Principal</li>
     <li>Enviar Arquivo</li>
     <li class="dropdown" [class.active]="isDropdownOpen">
-      <a (click)="toggleDropdown()">Relatórios</a>
-      <ul class="dropdown-content" *ngIf="isDropdownOpen">
-        <li (click)="emitSintetico()">Sintético</li>
-        <li (click)="emitAnalitico()">Analítico</li>
+      <a (click)="toggleDropdown()" class="relatorio">Relatórios<span class="material-symbols-outlined">
+        arrow_drop_down
+        </span></a>
+      <ul class="dropdown-content" style="padding-left: 0px" *ngIf="isDropdownOpen">
+        <li class="li-drop-sintetico" (click)="emitSintetico()">Sintético</li>
+        <li  class="li-drop-analitico" (click)="emitAnalitico()">Analítico</li>
       </ul>
     </li>
     <li>Perfil</li>

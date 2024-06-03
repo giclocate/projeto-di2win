@@ -3,11 +3,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { RelatorioComponent } from '../form/relatorio/relatorio.component';
 import { RelatorioAnaliticoComponent } from '../form/relatorio-analitico/relatorio-analitico.component';
 import { RelatorioSinteticoComponent } from '../form/relatorio-sintetico/relatorio-sintetico.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RelatorioComponent,RelatorioAnaliticoComponent,RelatorioSinteticoComponent],
+  imports: [CommonModule, RelatorioComponent, MatIcon,RelatorioAnaliticoComponent,RelatorioSinteticoComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
