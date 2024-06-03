@@ -59,17 +59,7 @@
     </div>
 
     <!--input - tipo de relatório-->
-    <div id="tipoRelatorioInput">
-      <p>Tipo de relatório:</p>
-      <div>
-        <input type="radio" id="sintetico" name="gender" value="male" checked />
-        Sintético
-      </div>
-      <div>
-        <input id="analitico" type="radio" name="gender" value="female" />
-        Analítico
-      </div>
-    </div>
+    
   </div>
 
   <div class="mat-elevation-z8">
@@ -98,19 +88,6 @@
           Data
         </th>
         <td mat-cell *matCellDef="let row">{{ row.dataID }}</td>
-      </ng-container>
-
-      <!-- Tipo documento Column -->
-      <ng-container matColumnDef="tipoDocumento">
-        <th
-          class="titulo-sintetico"
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-        >
-          Tipo de documento
-        </th>
-        <td mat-cell *matCellDef="let row">{{ row.tipoDocumento }}</td>
       </ng-container>
 
       <!-- QTD_PAG Column -->

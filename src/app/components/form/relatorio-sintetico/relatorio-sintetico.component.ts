@@ -90,7 +90,7 @@ const mockCompany: string[] = [
 })
 export class RelatorioSinteticoComponent {
 
-  displayedColumns: string[] = ['empresaID', 'dataID', 'tipoDocumento', 'qtdPag'];
+  displayedColumns: string[] = ['empresaID', 'dataID', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
