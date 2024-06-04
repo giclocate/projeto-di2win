@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -43,20 +43,26 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   fullData: UserData[];
   totalPaginas: number = 0;
 
+  autocompleteFocused: boolean = false;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('datePicker') datePicker: any;
+  @ViewChild('autocompleteInput') autocompleteInput?: ElementRef;
+
   startDate: Date | null = null;
   endDate: Date | null = null;
+  value: number = 0;
 
   myControl = new FormControl<string | UserData>('');
   options: UserData[] = this.mockCompanyToUserData(mockCompany);
   filteredOptions!: Observable<UserData[]>;
   selectedOption: string | undefined;
 
-  constructor(private datePipe: DatePipe, private excelService: ExcelService) {
+  constructor(private datePipe: DatePipe, private excelService: ExcelService, private renderer: Renderer2) {
     this.fullData = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
     this.dataSource = new MatTableDataSource<UserData>([]);
+
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -76,6 +82,20 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
 
       this.filterBySelectedCompany();
     });
+  }
+
+
+  onInputChange(event: any) {
+    const value = event.target.value;
+    if (value.trim() !== '') {
+      this.autocompleteFocused = true;
+    } else {
+      this.autocompleteFocused = false;
+    }
+  }
+  
+  onAutocompleteOptionSelected() {
+    this.autocompleteFocused = true; // Ou false, dependendo do comportamento que você deseja
   }
 
   reloadPage() {
@@ -119,6 +139,10 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
     this.dataSource.connect().subscribe(() => {
       this.updateTotalPaginas();
     });
+
+    setTimeout(() => {
+      this.value = 30558;
+    }, 0);
   }
 
   updateTotalPaginas() {

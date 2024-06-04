@@ -1,4 +1,4 @@
-<section id="page">
+<section id="page" [class.autocomplete-focused]="autocompleteFocused">
   <div id="tituloPageRelatorio">
     <h1>Relatório - Analítico</h1>
     <p id="paginasProcessadas">Páginas Processadas: {{totalPaginas}} -  {{selectedOption}}</p>
@@ -17,9 +17,10 @@
               matInput
               [formControl]="myControl"
               [matAutocomplete]="auto"
+              (change)="onInputChange($event)"
             />
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (onSelectionChange)="onAutocompleteOptionSelected()">
                 {{option.empresaID}}
               </mat-option>
             </mat-autocomplete>

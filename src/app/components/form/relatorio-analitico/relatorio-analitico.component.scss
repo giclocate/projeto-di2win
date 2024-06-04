@@ -2,9 +2,14 @@
 
 
 #page{
-  margin-top: 40%;
   font-family: "Sora", sans-serif;
+  transition: margin-top 0.3s ease-in-out;
+} 
+
+#page.autocomplete-focused {
+  margin-top: 32%;
 }
+
 
 #DivisaoPesquisa {
   width: 90%;
@@ -149,3 +154,4 @@ input[type='radio'] {
 .titulo-sintetico{
   color: #aaaaaa;
 }
+

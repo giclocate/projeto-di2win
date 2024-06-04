@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -92,6 +92,7 @@ export class RelatorioSinteticoComponent {
 
   displayedColumns: string[] = ['empresaID', 'dataID', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
+  totalPaginas: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -99,7 +100,9 @@ export class RelatorioSinteticoComponent {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  constructor(private datePipe: DatePipe, private excelService: ExcelService) {
+  value: number = 0;
+
+  constructor(private datePipe: DatePipe, private excelService: ExcelService, private cdr: ChangeDetectorRef) {
     const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
     this.dataSource = new MatTableDataSource(users);
   }
@@ -122,8 +125,23 @@ export class RelatorioSinteticoComponent {
         return data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       }
     };
+    this.dataSource.connect().subscribe(() => {
+      this.updateTotalPaginas();
+    });
+
+    setTimeout(() => {
+      this.value = 30558;
+      // Sinalize ao Angular para realizar uma detecção de mudanças manualmente
+      this.cdr.detectChanges();
+    }, 0);
   }
 
+  updateTotalPaginas() {
+    setTimeout(() => {
+      const filteredData = this.dataSource.filteredData;
+      this.totalPaginas = filteredData.reduce((total, data) => total + parseInt(data.qtdPag || '0', 10), 0);
+    });
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
