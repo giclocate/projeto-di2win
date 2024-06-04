@@ -40,6 +40,8 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['tipoDocumento', 'dataID', 'qtdPag'];
   dataSource: MatTableDataSource<UserData>;
+  fullData: UserData[];
+  totalPaginas: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,18 +52,34 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   myControl = new FormControl<string | UserData>('');
   options: UserData[] = this.mockCompanyToUserData(mockCompany);
   filteredOptions!: Observable<UserData[]>;
+  selectedOption: string | undefined;
 
   constructor(private datePipe: DatePipe, private excelService: ExcelService) {
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
-    this.dataSource = new MatTableDataSource(users);
-    
-    
+    this.fullData = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1, datePipe));
+    this.dataSource = new MatTableDataSource<UserData>([]);
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value?.empresaID || ''),
       filter(name => !!name), // Filtrar valores nulos
       map(name => this._filterUserData(name))
-    );
+    ); 
+
+    // Subscribe to value changes to update selectedOption
+    this.myControl.valueChanges.subscribe(value => {
+      if (typeof value === 'string') {
+        const selected = this.options.find(option => option.empresaID === value);
+        this.selectedOption = selected ? selected.empresaID : undefined;
+      } else {
+        this.selectedOption = value ? value.empresaID : undefined;
+      }
+
+      this.filterBySelectedCompany();
+    });
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   ngOnInit() {
@@ -75,7 +93,6 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   }
 
   displayFn(user: UserData): string {
-    console.log("estou sendo usado!")
     return user && user.empresaID ? user.empresaID : '';
   }
 
@@ -98,12 +115,40 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
                data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       }
     };
+
+    this.dataSource.connect().subscribe(() => {
+      this.updateTotalPaginas();
+    });
+  }
+
+  updateTotalPaginas() {
+    this.totalPaginas = this.dataSource.filteredData.reduce((total, data) => total + parseInt(data.qtdPag || '0', 10), 0);
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
+  
+    // Verificar se os campos de data estão preenchidos
+    if (this.startDate !== null && this.endDate !== null) {
+      // Aplicar o filtro de tipo de documento apenas aos dados filtrados atualmente
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        const lowerCaseFilter = filter.trim().toLowerCase();
+        return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
+               data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
+      };
+  
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    } else {
+      // Aplicar o filtro de tipo de documento a todos os dados
+      this.dataSource.filterPredicate = (data: UserData, filter: string) => {
+        const lowerCaseFilter = filter.trim().toLowerCase();
+        return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
+               data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
+      };
+  
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+  
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -115,24 +160,29 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
     } else if (type === 'end') {
       this.endDate = event.value;
     }
-
-    if (this.startDate && this.endDate) {
+  
+    // Verificar se ambas as datas foram preenchidas
+    if (this.startDate !== null && this.endDate !== null) {
       const formattedStartDate = this.datePipe.transform(this.startDate, 'yyyy-MM-dd') || '';
       const formattedEndDate = this.datePipe.transform(this.endDate, 'yyyy-MM-dd') || '';
-
+  
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         const start = new Date(formattedStartDate).getTime();
         const end = new Date(formattedEndDate).getTime();
         const dataDate = new Date(data.dataID).getTime();
-
+  
         return dataDate >= start && dataDate <= end;
       };
-
+  
       this.dataSource.filter = `${formattedStartDate} - ${formattedEndDate}`;
-
+  
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
+    } else {
+      // Se uma das datas estiver vazia, limpar o filtro de datas
+      this.dataSource.filterPredicate = () => true;
+      this.dataSource.filter = '';
     }
   }
 
@@ -143,15 +193,20 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {
     this.startDate = null;
     this.endDate = null;
-
+  
     // Limpar valores dos Datepickers
     startInput.value = '';
     endInput.value = '';
-
-    // Definindo uma função de filtro que sempre retorna verdadeiro para todos os dados
-    this.dataSource.filterPredicate = () => true;
+  
+    // Limpar o filtro de datas e aplicar o filtro de tipo de documento a todos os dados
+    this.dataSource.filterPredicate = (data: UserData, filter: string) => {
+      const lowerCaseFilter = filter.trim().toLowerCase();
+      return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
+             data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
+    };
+  
     this.dataSource.filter = '';
-
+  
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -169,6 +224,18 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
     const year = parseInt(parts[2], 10);
 
     return new Date(year, month, day);
+  }
+
+  filterBySelectedCompany() {
+    if (this.selectedOption) {
+      this.dataSource.data = this.fullData.filter(user => user.empresaID === this.selectedOption);
+    } else {
+      this.dataSource.data = [];
+    }
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
 
