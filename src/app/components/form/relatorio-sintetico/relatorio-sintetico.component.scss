@@ -2,7 +2,6 @@
 
 
 #page{
-  margin-top: 10%;
   font-family: "Sora", sans-serif;
 }
 
@@ -38,7 +37,6 @@
   border: 1.5px solid #a8a8a8;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 2%;
 }
 
 #inputPesquisa[type='text']:focus, #inputTipoDocumento:focus {
@@ -66,7 +64,7 @@
   align-items: center;
   column-gap: 20px;
   font-family:  "Sora", sans-serif;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 #tipoRelatorioInput {
@@ -116,36 +114,14 @@ input[type='radio'] {
   flex-direction: row;
   align-items: center;
   padding-left: 2%;
+  margin-top: 1.5%;
 }
 
 #iconInputData{
   color: #F21C8A;
 
 }
-#buttonBaixar{
-  display: flex;
-  justify-content: end;
-}
 
-#baixarRelatorio{
-  padding: 2% 5% 2% 5%;
-  border:2px solid #F21C8A;
-  color: #F21C8A;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  font-family:"Sora", sans-serif;
-  font-weight: 800;
-  transition: 0.6s;
-  box-shadow: 0px 8px 17px -8px rgb(22, 22, 22);
-}
-
-#baixarRelatorio:hover{
-  background-color: #F21C8A;
-  color: white;
-
-}
 .titulo-sintetico{
   color: #aaaaaa;
 }

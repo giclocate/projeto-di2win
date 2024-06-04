@@ -17,8 +17,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'projeto-di2win';
 
-  isRelatorioSinteticoVisible = true;
-  isRelatorioAnaliticoVisible = false;
+  isRelatorioSinteticoVisible = false;
+  isRelatorioAnaliticoVisible = true;
 
   switchToSintetico(): void {
     this.isRelatorioSinteticoVisible = true;

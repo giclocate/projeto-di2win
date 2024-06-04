@@ -1,24 +1,36 @@
-.container {
-    display: flex;
-    height: 100vh; /* Ajuste conforme necessário */
-  }
-
-  .form-container {
-    flex: 1; /* Ocupa todo o espaço disponível */
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-  }
-
-  /* Ajuste as dimensões do formulário conforme necessário */
-  app-form {
-    width: 80%; /* Largura do formulário */
-    max-width: 800px; /* Largura máxima do formulário */
-    height: 80%; /* Altura do formulário */
-    max-height: 600px; /* Altura máxima do formulário */
+.container, app-header {
+  margin: 0; /* Remover margem */
 }
 
-.mat-mdc-text-field-wrapper{
-  width: 120%;
-  background-color: red;
+.container {
+  display: flex;
+  align-items: flex-start; /* Alinhar os elementos do topo */
+}
+
+.form-container {
+  flex: 1; /* Ocupa todo o espaço disponível */
+  display: flex;
+  flex-direction: column; /* Ajustar a orientação para uma coluna */
+  justify-content: flex-start; /* Alinhar os elementos do topo */
+  align-items: center; /* Centraliza horizontalmente */
+}
+
+.app-sidebar {
+  width: 20%; /* Largura da barra lateral em relação à largura total da tela */
+}
+
+/* Ajuste as dimensões do formulário conforme necessário */
+app-form {
+  width: 80%; /* Largura do formulário */
+  max-width: 800px; /* Largura máxima do formulário */
+  height: 80%; /* Altura do formulário */
+  max-height: 600px; /* Altura máxima do formulário */
+}
+
+app-relatorio-sintetico,
+app-relatorio-analitico {
+  width: 80%; /* Largura dos componentes de relatório em relação à largura do .form-container */
+  max-width: 80%; /* Largura máxima dos componentes de relatório em relação à largura do .form-container */
+  height: 80%; /* Altura dos componentes de relatório em relação à altura do .form-container */
+  max-height: 80%; /* Altura máxima dos componentes de relatório em relação à altura do .form-container */
 }
