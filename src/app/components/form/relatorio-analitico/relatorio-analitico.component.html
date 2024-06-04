@@ -121,7 +121,7 @@
         >
           Data
         </th>
-        <td mat-cell *matCellDef="let row">{{ row.dataID }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.dataID | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
 
       <!-- QTD_PAG Column -->
@@ -132,7 +132,7 @@
           *matHeaderCellDef
           mat-sort-header
         >
-          Qtd. de páginas
+          Quantidade de páginas processadas
         </th>
         <td mat-cell *matCellDef="let row">{{ row.qtdPag }}</td>
       </ng-container>

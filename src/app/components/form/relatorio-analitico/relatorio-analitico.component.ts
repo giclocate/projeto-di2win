@@ -16,6 +16,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
+import { mockCompany, mockDates, mockDocument, mockPags } from '../../../services/dados.service';
+import { UserData } from '../../../model/UserModel';
+
 @Component({
   selector: 'app-relatorio-analitico',
   standalone: true,
@@ -71,7 +74,6 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
       map(name => this._filterUserData(name))
     );
 
-    // Subscribe to value changes to update selectedOption
     this.myControl.valueChanges.subscribe(value => {
       if (typeof value === 'string') {
         const selected = this.options.find(option => option.empresaID === value);
@@ -95,7 +97,7 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   }
 
   onAutocompleteOptionSelected() {
-    this.autocompleteFocused = true; // Ou false, dependendo do comportamento que você deseja
+    this.autocompleteFocused = true; 
   }
 
   reloadPage() {
@@ -198,13 +200,15 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
         return dataDate >= start && dataDate <= end;
       };
 
-      this.dataSource.filter = `${formattedStartDate} - ${formattedEndDate}`;
+      const startString = this.parseDateToBrazilian(this.startDate);
+      const endString = this.parseDateToBrazilian(this.endDate);
+  
+      this.dataSource.filter = `${startString} - ${endString}`;
 
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
     } else {
-      // Se uma das datas estiver vazia, limpar o filtro de datas
       this.dataSource.filterPredicate = () => true;
       this.dataSource.filter = '';
     }
@@ -241,13 +245,12 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
     return this.options.filter(option => option.empresaID.toLowerCase().includes(filterValue));
   }
 
-  parseDate(dateString: string, format: string = 'dd/MM/yyyy'): Date {
-    const parts = dateString.split('/');
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1;
-    const year = parseInt(parts[2], 10);
-
-    return new Date(year, month, day);
+  parseDateToBrazilian(date: string | Date): string {
+    if (typeof date === 'string') {
+      return this.datePipe.transform(new Date(date), 'dd/MM/yyyy') || '';
+    } else {
+      return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+    }
   }
 
   filterBySelectedCompany() {
@@ -270,7 +273,6 @@ function createNewUser(id: number, datePipe: DatePipe): UserData {
   const dates = mockDates[Math.round(Math.random() * (mockDates.length - 1))];
 
   return {
-    id: id,
     empresaID: empresa,
     dataID: dates,
     tipoDocumento: document,
@@ -278,69 +280,3 @@ function createNewUser(id: number, datePipe: DatePipe): UserData {
   };
 }
 
-export interface UserData {
-  id: number;
-  empresaID: string;
-  dataID: string;
-  tipoDocumento: string;
-  qtdPag: string;
-}
-
-const mockDates: string[] = [
-  '2024-01-01',
-  '2024-02-14',
-  '2024-03-17',
-  '2024-04-01',
-  '2024-05-05',
-  '2024-05-28',
-  '2024-06-21',
-  '2024-07-04',
-  '2024-08-15',
-  '2024-09-10',
-  '2024-10-31',
-  '2024-11-25',
-  '2024-12-31'
-];
-
-const mockPags: string[] = [
-  '16',
-  '100',
-  '54',
-  '321',
-  '1230',
-  '243',
-  '321',
-  '28',
-];
-
-const mockDocument: string[] = [
-  'CNH',
-  'CPF',
-  'Contrato',
-  'Certidão de Nascimento',
-  'Certidão de Casamento',
-  'Certidão de Óbito',
-  'Carteira de Trabalho',
-  'Comprovante de Residência',
-  'Passaporte',
-  'RG',
-  'Carteira de Identidade Profissional',
-  'Título de Eleitor',
-  'Carteira de Estudante',
-  'Certificado de Reservista',
-  'Cartão de Crédito',
-  'Cartão de Débito'
-];
-
-const mockCompany: string[] = [
-  'CyberTech',
-  'NovaWave Industries',
-  'Quantum Innovations',
-  'SkyLabs Corporation',
-  'NebulaTech Solutions',
-  'Phoenix Innovate',
-  'HorizonTech Enterprises',
-  'FusionWorks Inc.',
-  'PrimeTech Solutions',
-  'Apex Global Technologies'
-];
