@@ -8,17 +8,27 @@
   <div id="divPesquisaRelatorio">
     <div id="inputsAnaliticos">
       <!--input de pesquisa-->
-      <div id="inputLupa">
-        <input
-          type="text"
-          id="inputPesquisa"
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Pesquisar por nome da empresa"
-          #input
-        />
-        <i id="icon-lupa" class="fa-solid fa-magnifying-glass" ></i>
-      </div>
+        <div id="inputLupa">
+          <mat-form-field appearance="fill" color="accent">
+            <mat-label>Pesquisar por nome da empresa</mat-label>
+            <input
+              type="text"
+              id="inputPesquisa"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.empresaID}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <i id="icon-lupa" class="fa-solid fa-magnifying-glass" ></i>
+        </div>
       <!--input tipo de documento-->
       <input
         type="text"
@@ -62,18 +72,6 @@
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-            <!-- Empresa Column -->
-            <ng-container matColumnDef="empresaID">
-              <th
-                class="titulo-sintetico"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                Empresa
-              </th>
-              <td mat-cell *matCellDef="let row">{{ row.empresaID }}</td>
-            </ng-container>
       <!-- Tipo de Documento Column -->
       <ng-container matColumnDef="tipoDocumento">
         <th
