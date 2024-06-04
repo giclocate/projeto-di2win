@@ -8,8 +8,8 @@
   <div id="divPesquisaRelatorio">
     <div id="inputsAnaliticos">
       <!--input de pesquisa-->
-        <div id="inputLupa">
-          <mat-form-field appearance="fill" color="accent">
+        <div id="inputSearch">
+          <mat-form-field appearance="fill" color="accent" class="custom-form-field">
             <mat-label>Pesquisar por nome da empresa</mat-label>
             <input
               type="text"
@@ -18,17 +18,19 @@
               [formControl]="myControl"
               [matAutocomplete]="auto"
               (change)="onInputChange($event)"
+              style="color: #F21C8A; "
             />
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (onSelectionChange)="onAutocompleteOptionSelected()">
                 {{option.empresaID}}
               </mat-option>
             </mat-autocomplete>
-            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
+            <button mat-button id="clear-button"
+            matSuffix mat-icon-button aria-label="Clear"
+               (click)="myControl.setValue('')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <i id="icon-lupa" class="fa-solid fa-magnifying-glass" ></i>
         </div>
       <!--input tipo de documento-->
       <input

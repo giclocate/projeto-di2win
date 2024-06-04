@@ -4,7 +4,7 @@
 #page{
   font-family: "Sora", sans-serif;
   transition: margin-top 0.3s ease-in-out;
-} 
+}
 
 #page.autocomplete-focused {
   margin-top: 32%;
@@ -36,7 +36,7 @@
   padding-left: 0.5%;
 }
 
-#inputPesquisa,#inputTipoDocumento {
+#inputTipoDocumento {
   padding: 2%;
   width: 100%;
   border-radius: 5px;
@@ -46,12 +46,19 @@
   margin-bottom: 2%;
 }
 
-#inputPesquisa[type='text']:focus, #inputTipoDocumento:focus {
+#inputTipoDocumento:focus {
   border:1.5px solid #575757;
   outline: none;
 }
 
-#inputPesquisa:focus + #icon-lupa {
+
+#inputSearch{
+  display: flex;
+  width: 97%;
+}
+
+
+#icon-lupa {
  font-size: 1rem;
 }
 
@@ -85,16 +92,10 @@ input[type='radio'] {
   border: 1px solid red;
 }
 
-
-#inputLupa{
-  display: flex;
-  width: 97%;
-}
-
 #inputTipoDocumento{
   width: 40%;
   margin-top: 1.5%;
-  
+
 }
 
 #inputsAnaliticos{
@@ -154,4 +155,49 @@ input[type='radio'] {
 .titulo-sintetico{
   color: #aaaaaa;
 }
+/* Estilizando o campo de entrada do Angular Material */
+.custom-form-field {
+  width: 100%;
+}
+
+.custom-form-field .mat-form-field-flex {
+  border-radius: 5px !important;
+  background-color: #fff !important; /* Define a cor de fundo branca */
+  transition: border-color 0.3s !important;
+  padding: 0.5em !important; /* Ajuste conforme necessário */
+}
+
+.custom-form-field .mat-form-field-infix {
+  border-radius: 5px !important;
+}
+
+.custom-form-field .mat-input-element {
+  border-radius: 5px !important;
+  background-color: #fff !important; /* Define a cor de fundo branca */
+  padding: 0.5em !important; /* Ajuste conforme necessário */
+}
+
+.mat-icon {
+  color: #F21C8A !important;
+  font-size: 1.2rem !important;
+  transition: font-size 0.6s !important;
+  margin-left: -6% !important;
+  margin-top: 2% !important;
+}
+
+/* Estilizando o botão de limpar */
+#clear-button {
+  border: none !important;
+}
+
+/* Exibir o botão de limpar quando o campo de entrada estiver focado */
+.custom-form-field .mat-form-field-flex:focus-within + .clear-button {
+  display: inline-flex !important;
+}
+
+/* Exibir o botão de limpar quando houver texto no campo de entrada */
+.custom-form-field .mat-input-element:not(:placeholder-shown) ~ .clear-button {
+  display: inline-flex !important;
+}
+
 

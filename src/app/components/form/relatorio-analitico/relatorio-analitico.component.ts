@@ -69,7 +69,7 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
       map(value => typeof value === 'string' ? value : value?.empresaID || ''),
       filter(name => !!name), // Filtrar valores nulos
       map(name => this._filterUserData(name))
-    ); 
+    );
 
     // Subscribe to value changes to update selectedOption
     this.myControl.valueChanges.subscribe(value => {
@@ -93,7 +93,7 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
       this.autocompleteFocused = false;
     }
   }
-  
+
   onAutocompleteOptionSelected() {
     this.autocompleteFocused = true; // Ou false, dependendo do comportamento que você deseja
   }
@@ -151,7 +151,7 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-  
+
     // Verificar se os campos de data estão preenchidos
     if (this.startDate !== null && this.endDate !== null) {
       // Aplicar o filtro de tipo de documento apenas aos dados filtrados atualmente
@@ -160,7 +160,7 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
         return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
                data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       };
-  
+
       this.dataSource.filter = filterValue.trim().toLowerCase();
     } else {
       // Aplicar o filtro de tipo de documento a todos os dados
@@ -169,10 +169,10 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
         return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
                data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
       };
-  
+
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -184,22 +184,22 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
     } else if (type === 'end') {
       this.endDate = event.value;
     }
-  
+
     // Verificar se ambas as datas foram preenchidas
     if (this.startDate !== null && this.endDate !== null) {
       const formattedStartDate = this.datePipe.transform(this.startDate, 'yyyy-MM-dd') || '';
       const formattedEndDate = this.datePipe.transform(this.endDate, 'yyyy-MM-dd') || '';
-  
+
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         const start = new Date(formattedStartDate).getTime();
         const end = new Date(formattedEndDate).getTime();
         const dataDate = new Date(data.dataID).getTime();
-  
+
         return dataDate >= start && dataDate <= end;
       };
-  
+
       this.dataSource.filter = `${formattedStartDate} - ${formattedEndDate}`;
-  
+
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
@@ -217,20 +217,20 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {
     this.startDate = null;
     this.endDate = null;
-  
+
     // Limpar valores dos Datepickers
     startInput.value = '';
     endInput.value = '';
-  
+
     // Limpar o filtro de datas e aplicar o filtro de tipo de documento a todos os dados
     this.dataSource.filterPredicate = (data: UserData, filter: string) => {
       const lowerCaseFilter = filter.trim().toLowerCase();
       return data.empresaID.toLowerCase().includes(lowerCaseFilter) ||
              data.tipoDocumento.toLowerCase().includes(lowerCaseFilter);
     };
-  
+
     this.dataSource.filter = '';
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
