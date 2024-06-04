@@ -1,7 +1,7 @@
 <section id="page" [class.autocomplete-focused]="autocompleteFocused">
   <div id="tituloPageRelatorio">
     <h1>Relatório - Analítico</h1>
-    <p id="paginasProcessadas">Páginas Processadas: {{totalPaginas}} -  {{selectedOption}}</p>
+    <p id="paginasProcessadas">Páginas Processadas: {{totalPaginas}} -  {{selectedOption ? selectedOption : 'Nenhuma empresa selecionada'}}</p>
     <hr />
   </div>
 
@@ -120,7 +120,7 @@
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">
-          Sem dados para filtrar "{{ input.value }}"
+      Selecione uma empresa para filtrar os dados!
         </td>
       </tr>
     </table>
