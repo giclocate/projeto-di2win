@@ -215,7 +215,11 @@ export class RelatorioAnaliticoComponent implements OnInit, AfterViewInit {
   }
 
   exportData() {
-    this.excelService.exportToExcel(this.dataSource.data, 'relatorio');
+    // Aqui você precisa fornecer o nome da empresa atual como o terceiro argumento
+    const dados = this.dataSource.data;
+    const empresaSelecionada = this.selectedOption ? this.selectedOption : 'Nenhuma empresa selecionada';
+
+    this.excelService.exportToExcel(dados, empresaSelecionada);
   }
 
   resetDateFilter(startInput: HTMLInputElement, endInput: HTMLInputElement): void {

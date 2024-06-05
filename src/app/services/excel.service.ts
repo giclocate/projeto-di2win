@@ -1,7 +1,5 @@
-// src/app/services/excel.service.ts
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
@@ -9,53 +7,65 @@ import { saveAs } from 'file-saver';
 export class ExcelService {
   constructor() {}
 
-  exportToExcel(data: any[], fileName: string | undefined): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+  exportToExcel(data: any[], selectedEmpresa: string): void {
+    // Cria uma nova planilha do Excel
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
 
-    // Aplica estilos diretamente às células
+    // Cria uma nova folha na planilha
+    const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([]);
+
+    // Adiciona o nome da empresa e a data atual ao título do arquivo
+    const currentDate = new Date().toLocaleDateString().split('/').join('-');
+    const sanitizedFileName = `${selectedEmpresa}_${currentDate}`;
+
+    // Aplica o estilo ao cabeçalho das colunas
     const headerCellStyle = {
       font: { bold: true },
       fill: { fgColor: { rgb: 'FF0000FF' } }, // Cor azul
     };
 
-    // Aplica o estilo ao cabeçalho das colunas (A1 a D1 neste exemplo)
-    XLSX.utils.sheet_add_json(worksheet, [{ A: "Empresa", B: "Data", C: "Tipo de Documento", D: "Qtd. de Páginas" }], { header: ["A", "B", "C", "D"], skipHeader: true });
-    worksheet['!cols'] = [
-      { wch: 25 }, // Largura maior para a primeira célula (A)
-      { wch: 20 }, // Largura padrão para as demais células (B, C, D)
-      { wch: 20 },
-      { wch: 20 }
-    ];
+    // Insere o nome da empresa em uma célula específica (por exemplo, A1)
+    worksheet['B1'] = { t: 's', v: `Empresa: ${selectedEmpresa}`, s: headerCellStyle };
 
-    // Define o estilo para o cabeçalho das colunas
-    for (let i = 0; i < Object.keys(worksheet).length; i++) {
-      const cellRef = XLSX.utils.encode_cell({ r: 0, c: i });
+    // Adiciona os cabeçalhos das colunas apenas uma vez
+    const columnHeaders = ['Data', 'Tipo de Documento', 'Qtd. de Páginas'];
+    XLSX.utils.sheet_add_aoa(worksheet, [columnHeaders], { origin: 'A3' });
+
+    // Adiciona os dados
+    const dataArray = data.map(item => [item.dataID, item.tipoDocumento, item.qtdPag]);
+    XLSX.utils.sheet_add_aoa(worksheet, dataArray, { origin: 'A5' });
+
+    // Aplica o estilo ao cabeçalho das colunas
+    for (let i = 0; i < 3; i++) {
+      const cellRef = XLSX.utils.encode_cell({ r: 1, c: i });
       if (!worksheet[cellRef]) continue;
       worksheet[cellRef].s = headerCellStyle;
     }
 
-    // Aplica o estilo às células principais (A2 em diante)
-    const mainCellStyle = {
-      fill: { fgColor: { rgb: 'FFFF0000' } }, // Cor vermelha
-    };
+    // Define a largura das colunas com base no conteúdo
+    const columnWidths = this.calculateColumnWidths(dataArray);
+    worksheet['!cols'] = columnWidths;
 
-    const rangeRef = worksheet['!ref'];
-    if (rangeRef) {
-      const range = XLSX.utils.decode_range(rangeRef);
-      for (let rowNum = 1; rowNum <= range.e.r; rowNum++) {
-        for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-          const cellRef = XLSX.utils.encode_cell({ r: rowNum, c: colNum });
-          if (!worksheet[cellRef]) continue;
-          worksheet[cellRef].s = mainCellStyle;
-        }
-      }
-    }
-
-    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    // Adiciona a folha à planilha
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
     // Salva o arquivo Excel
-    const sanitizedFileName = fileName ?? 'exported_data';
-    XLSX.writeFile(workbook, `${sanitizedFileName}_export_${new Date().getTime()}.xlsx`);
+    XLSX.writeFile(workbook, `${sanitizedFileName}.xlsx`);
+  }
+
+  // Função para calcular a largura ideal das colunas com base no conteúdo dos dados
+  private calculateColumnWidths(data: any[]): any[] {
+    const columnWidths = [];
+    for (let i = 0; i < data[0].length; i++) {
+      const columnWidth = { wch: 10 }; // Largura inicial das colunas
+      for (const row of data) {
+        const cellValue = row[i] ? row[i].toString() : '';
+        if (cellValue.length > columnWidth.wch) {
+          columnWidth.wch = cellValue.length;
+        }
+      }
+      columnWidths.push(columnWidth);
+    }
+    return columnWidths;
   }
 }

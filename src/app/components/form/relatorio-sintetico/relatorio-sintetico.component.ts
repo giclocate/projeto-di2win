@@ -46,10 +46,6 @@ export class RelatorioSinteticoComponent {
     this.dataSource = new MatTableDataSource(users);
   }
 
-  exportData() {
-    this.excelService.exportToExcel(this.dataSource.data, 'relatorio');
-  }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
